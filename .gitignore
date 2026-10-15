@@ -1,0 +1,24 @@
+# Business / customer data
+*.db
+*.sqlite
+*.sqlite3
+lux_class_history.csv
+LuxBackups/
+*.zip
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local reports / exports
+exports/
+reports/
+*.csv
