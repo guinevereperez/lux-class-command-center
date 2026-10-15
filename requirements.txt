@@ -1,0 +1,2 @@
+# Lux Class Command Center uses Python's standard library only.
+# Python 3.13+ recommended for the current portfolio build.
