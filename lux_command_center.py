@@ -18979,4 +18979,2593 @@ history_backup_status_label = tk.Label(
     backup_current_frame,
     text="CSV class-plan history: Checking...",
     font=("Arial", 11),
+    bg=soft_pink,    fg=dark_text,
+    anchor="w"
+)
+
+
+history_backup_status_label.pack(
+    fill="x",
+    pady=3
+)
+
+
+# -----------------------------------------------------
+# CREATE BACKUP
+# -----------------------------------------------------
+
+create_backup_frame = tk.LabelFrame(
+    backup_tab,
+    text="CREATE BACKUP",
+    font=("Arial", 11, "bold"),
     bg=soft_pink,
+    fg=dark_text,
+    padx=20,
+    pady=15
+)
+
+
+create_backup_frame.pack(
+    fill="x",
+    padx=35,
+    pady=(0, 12)
+)
+
+
+tk.Label(
+    create_backup_frame,
+    text=(
+        "Quick Backup saves a timestamped ZIP "
+        "inside the LuxBackups folder.\n"
+        "Save Backup As lets you choose another "
+        "location such as OneDrive, Google Drive, "
+        "or a USB drive."
+    ),
+    font=("Arial", 10),
+    bg=soft_pink,
+    fg=dark_text,
+    justify="left"
+).pack(
+    pady=(0, 12)
+)
+
+
+backup_button_row = tk.Frame(
+    create_backup_frame,
+    bg=soft_pink
+)
+
+
+backup_button_row.pack()
+
+
+quick_backup_button = tk.Button(
+    backup_button_row,
+    text="QUICK BACKUP",
+    font=("Arial", 11, "bold"),
+    bg=gold,
+    fg="white",
+    padx=18,
+    pady=9,
+    command=quick_backup
+)
+
+
+quick_backup_button.grid(
+    row=0,
+    column=0,
+    padx=6
+)
+
+
+save_backup_as_button = tk.Button(
+    backup_button_row,
+    text="SAVE BACKUP AS...",
+    font=("Arial", 11, "bold"),
+    bg=lux_pink,
+    fg=dark_text,
+    padx=18,
+    pady=9,
+    command=save_backup_as
+)
+
+
+save_backup_as_button.grid(
+    row=0,
+    column=1,
+    padx=6
+)
+
+
+open_backup_folder_button = tk.Button(
+    backup_button_row,
+    text="OPEN BACKUP FOLDER",
+    font=("Arial", 11, "bold"),
+    padx=18,
+    pady=9,
+    command=open_local_backup_folder
+)
+
+
+open_backup_folder_button.grid(
+    row=0,
+    column=2,
+    padx=6
+)
+
+
+# -----------------------------------------------------
+# RESTORE
+# -----------------------------------------------------
+
+restore_frame = tk.LabelFrame(
+    backup_tab,
+    text="RESTORE FROM BACKUP",
+    font=("Arial", 11, "bold"),
+    bg=soft_pink,
+    fg=dark_text,
+    padx=20,
+    pady=15
+)
+
+
+restore_frame.pack(
+    fill="x",
+    padx=35,
+    pady=(0, 12)
+)
+
+
+tk.Label(
+    restore_frame,
+    text=(
+        "Restore replaces the current SQLite data "
+        "with a selected Lux backup.\n"
+        "Before replacing anything, Lux automatically "
+        "creates a safety backup of the CURRENT data."
+    ),
+    font=("Arial", 10),
+    bg=soft_pink,
+    fg=dark_text,
+    justify="left"
+).pack(
+    pady=(0, 12)
+)
+
+
+restore_backup_button = tk.Button(
+    restore_frame,
+    text="RESTORE BACKUP...",
+    font=("Arial", 11, "bold"),
+    bg=lux_pink,
+    fg=dark_text,
+    padx=25,
+    pady=10,
+    command=restore_backup
+)
+
+
+restore_backup_button.pack()
+
+
+# -----------------------------------------------------
+# SAFETY NOTES
+# -----------------------------------------------------
+
+safety_frame = tk.LabelFrame(
+    backup_tab,
+    text="WHAT A BACKUP CONTAINS",
+    font=("Arial", 11, "bold"),
+    bg=soft_pink,
+    fg=dark_text,
+    padx=20,
+    pady=12
+)
+
+
+safety_frame.pack(
+    fill="x",
+    padx=35,
+    pady=(0, 12)
+)
+
+
+tk.Label(
+    safety_frame,
+    text=(
+        "• SQLite database: students, classes, "
+        "enrollments, payments, inventory, and rules\n"
+        "• CSV calculator-plan history, when present\n"
+        "• Backup date/version information\n"
+        "• A reference copy of the Python program "
+        "that created the backup"
+    ),
+    font=("Arial", 10),
+    bg=soft_pink,
+    fg=dark_text,
+    justify="left",
+    anchor="w"
+).pack(
+    fill="x"
+)
+
+
+backup_status_label = tk.Label(
+    backup_tab,
+    text="No backup action performed in this session.",
+    font=("Arial", 10, "italic"),
+    bg=soft_pink,
+    fg=gold
+)
+
+
+backup_status_label.pack(
+    pady=(5, 10)
+)
+
+
+
+# =====================================================
+# REPORTS TAB
+# =====================================================
+
+# v4.2 turns live database information into reports that
+# Becca can preview and export as CSV for Excel or Google Sheets.
+#
+# Important: the report tab does not manually maintain totals.
+# It recalculates from the live database whenever Preview or Export
+# is used, so the exported file follows the actual records.
+
+reports_header = tk.Label(
+    reports_tab,
+    text="REPORTS + EXPORTS",
+    font=("Arial", 20, "bold"),
+    bg=lux_pink,
+    fg=dark_text
+)
+
+reports_header.pack(
+    fill="x",
+    pady=(0, 5)
+)
+
+reports_subtitle = tk.Label(
+    reports_tab,
+    text=(
+        "Build a live report from Lux data, preview it here, "
+        "then export it as a CSV file."
+    ),
+    font=("Arial", 10),
+    bg=soft_pink,
+    fg=dark_text
+)
+
+reports_subtitle.pack(
+    pady=(4, 8)
+)
+
+report_controls_frame = tk.Frame(
+    reports_tab,
+    bg=soft_pink
+)
+
+report_controls_frame.pack(
+    fill="x",
+    padx=15,
+    pady=(0, 8)
+)
+
+
+tk.Label(
+    report_controls_frame,
+    text="Report Type",
+    font=("Arial", 9, "bold"),
+    bg=soft_pink
+).grid(
+    row=0,
+    column=0,
+    sticky="w",
+    padx=(0, 4)
+)
+
+
+report_type_var = tk.StringVar(
+    value="Class Roster"
+)
+
+
+report_type_combo = ttk.Combobox(
+    report_controls_frame,
+    textvariable=report_type_var,
+    values=(
+        "Class Roster",
+        "Payment & Balance",
+        "Student Directory",
+        "Class Readiness"
+    ),
+    state="readonly",
+    width=19
+)
+
+
+report_type_combo.grid(
+    row=0,
+    column=1,
+    padx=(0, 10)
+)
+
+
+report_type_combo.bind(
+    "<<ComboboxSelected>>",
+    report_type_changed
+)
+
+
+tk.Label(
+    report_controls_frame,
+    text="Class Session",
+    font=("Arial", 9, "bold"),
+    bg=soft_pink
+).grid(
+    row=0,
+    column=2,
+    sticky="w",
+    padx=(0, 4)
+)
+
+
+report_session_combo = ttk.Combobox(
+    report_controls_frame,
+    state="readonly",
+    width=47
+)
+
+
+report_session_combo.set(
+    "All Classes"
+)
+
+
+report_session_combo.grid(
+    row=0,
+    column=3,
+    padx=(0, 10)
+)
+
+
+report_session_combo.bind(
+    "<<ComboboxSelected>>",
+    preview_current_report
+)
+
+
+tk.Label(
+    report_controls_frame,
+    text="Balances",
+    font=("Arial", 9, "bold"),
+    bg=soft_pink
+).grid(
+    row=1,
+    column=0,
+    sticky="w",
+    padx=(0, 4),
+    pady=(6, 0)
+)
+
+
+report_balance_filter_var = tk.StringVar(
+    value="All Balances"
+)
+
+
+report_balance_filter_combo = ttk.Combobox(
+    report_controls_frame,
+    textvariable=report_balance_filter_var,
+    values=(
+        "All Balances",
+        "Balance Due",
+        "Paid in Full"
+    ),
+    state="disabled",
+    width=19
+)
+
+
+report_balance_filter_combo.grid(
+    row=1,
+    column=1,
+    padx=(0, 10),
+    pady=(6, 0)
+)
+
+
+report_balance_filter_combo.bind(
+    "<<ComboboxSelected>>",
+    preview_current_report
+)
+
+
+report_buttons_frame = tk.Frame(
+    report_controls_frame,
+    bg=soft_pink
+)
+
+
+report_buttons_frame.grid(
+    row=1,
+    column=2,
+    columnspan=2,
+    sticky="w",
+    pady=(6, 0)
+)
+
+
+preview_report_button = tk.Button(
+    report_buttons_frame,
+    text="PREVIEW / REFRESH",
+    font=("Arial", 10, "bold"),
+    bg=gold,
+    fg="white",
+    padx=18,
+    pady=6,
+    command=preview_current_report
+)
+
+
+preview_report_button.grid(
+    row=0,
+    column=0,
+    padx=(0, 8)
+)
+
+
+export_report_button = tk.Button(
+    report_buttons_frame,
+    text="EXPORT CSV",
+    font=("Arial", 10, "bold"),
+    bg=lux_pink,
+    fg=dark_text,
+    padx=18,
+    pady=6,
+    command=export_current_report_csv
+)
+
+
+export_report_button.grid(
+    row=0,
+    column=1,
+    padx=(0, 8)
+)
+
+
+report_help_label = tk.Label(
+    reports_tab,
+    text=(
+        "CSV files open in Excel and Google Sheets. "
+        "Class Roster and Readiness use one selected class; "
+        "Payment & Balance can report all classes or one class."
+    ),
+    font=("Arial", 8, "italic"),
+    bg=soft_pink,
+    fg=dark_text,
+    wraplength=900,
+    justify="left"
+)
+
+
+report_help_label.pack(
+    padx=15,
+    pady=(0, 7),
+    anchor="w"
+)
+
+
+report_preview_title_label = tk.Label(
+    reports_tab,
+    text="REPORT PREVIEW",
+    font=("Arial", 13, "bold"),
+    bg=lux_pink,
+    fg=dark_text
+)
+
+
+report_preview_title_label.pack(
+    fill="x",
+    pady=(0, 2)
+)
+
+
+report_preview_summary_label = tk.Label(
+    reports_tab,
+    text="",
+    font=("Arial", 10),
+    bg=soft_pink,
+    fg=dark_text,
+    wraplength=900,
+    justify="center"
+)
+
+
+report_preview_summary_label.pack(
+    pady=(4, 2)
+)
+
+
+report_preview_count_label = tk.Label(
+    reports_tab,
+    text="",
+    font=("Arial", 8, "italic"),
+    bg=soft_pink,
+    fg=dark_text
+)
+
+
+report_preview_count_label.pack(
+    pady=(0, 5)
+)
+
+
+report_preview_frame = tk.Frame(
+    reports_tab,
+    bg=soft_pink
+)
+
+
+report_preview_frame.pack(
+    fill="both",
+    expand=True,
+    padx=15,
+    pady=(0, 12)
+)
+
+
+report_preview_table = ttk.Treeview(
+    report_preview_frame,
+    columns=("placeholder",),
+    show="headings"
+)
+
+
+report_preview_table.heading(
+    "placeholder",
+    text="Report Preview"
+)
+
+
+report_preview_table.column(
+    "placeholder",
+    width=700
+)
+
+
+report_preview_vertical_scrollbar = ttk.Scrollbar(
+    report_preview_frame,
+    orient="vertical",
+    command=report_preview_table.yview
+)
+
+
+report_preview_horizontal_scrollbar = ttk.Scrollbar(
+    report_preview_frame,
+    orient="horizontal",
+    command=report_preview_table.xview
+)
+
+
+report_preview_table.configure(
+    yscrollcommand=report_preview_vertical_scrollbar.set,
+    xscrollcommand=report_preview_horizontal_scrollbar.set
+)
+
+
+report_preview_table.grid(
+    row=0,
+    column=0,
+    sticky="nsew"
+)
+
+
+report_preview_vertical_scrollbar.grid(
+    row=0,
+    column=1,
+    sticky="ns"
+)
+
+
+report_preview_horizontal_scrollbar.grid(
+    row=1,
+    column=0,
+    sticky="ew"
+)
+
+
+report_preview_frame.rowconfigure(
+    0,
+    weight=1
+)
+
+
+report_preview_frame.columnconfigure(
+    0,
+    weight=1
+)
+
+
+# Whenever the user opens this tab,
+# refresh the connected student/class choices.
+
+notebook.bind(
+    "<<NotebookTabChanged>>",
+    enrollment_tab_selected
+)
+
+
+# =====================================================
+# SUPPLIES TAB
+# =====================================================
+
+# Supplies now has three connected jobs:
+#
+# 1. INVENTORY
+#    What does Lux physically have?
+#
+# 2. CLASS SUPPLY REQUIREMENTS
+#    How much of each item does a class type use?
+#
+# 3. CLASS READINESS
+#    For a real scheduled class with real enrollments,
+#    do we have enough supplies right now?
+
+
+# -----------------------------------------------------
+# SCROLLABLE SUPPLIES PAGE
+# -----------------------------------------------------
+
+supplies_main_container = tk.Frame(
+    supplies_tab,
+    bg=soft_pink
+)
+
+
+supplies_main_container.pack(
+    fill="both",
+    expand=True
+)
+
+
+supplies_canvas = tk.Canvas(
+    supplies_main_container,
+    bg=soft_pink,
+    highlightthickness=0
+)
+
+
+supplies_page_scrollbar = ttk.Scrollbar(
+    supplies_main_container,
+    orient="vertical",
+    command=supplies_canvas.yview
+)
+
+
+supplies_scrollable_frame = tk.Frame(
+    supplies_canvas,
+    bg=soft_pink
+)
+
+
+supplies_scrollable_frame.bind(
+    "<Configure>",
+    lambda event: supplies_canvas.configure(
+        scrollregion=supplies_canvas.bbox("all")
+    )
+)
+
+
+supplies_canvas_window = supplies_canvas.create_window(
+    (0, 0),
+    window=supplies_scrollable_frame,
+    anchor="nw"
+)
+
+
+def resize_supplies_scrollable_frame(event):
+
+    supplies_canvas.itemconfigure(
+        supplies_canvas_window,
+        width=event.width
+    )
+
+
+supplies_canvas.bind(
+    "<Configure>",
+    resize_supplies_scrollable_frame
+)
+
+
+supplies_canvas.configure(
+    yscrollcommand=supplies_page_scrollbar.set
+)
+
+
+supplies_canvas.pack(
+    side="left",
+    fill="both",
+    expand=True
+)
+
+
+supplies_page_scrollbar.pack(
+    side="right",
+    fill="y"
+)
+
+
+def supplies_mousewheel_scroll(event):
+
+    if notebook.select() == str(supplies_tab):
+
+        supplies_canvas.yview_scroll(
+            int(
+                -1 * (event.delta / 120)
+            ),
+            "units"
+        )
+
+
+window.bind_all(
+    "<MouseWheel>",
+    supplies_mousewheel_scroll,
+    add="+"
+)
+
+
+# -----------------------------------------------------
+# SUPPLIES HEADER
+# -----------------------------------------------------
+
+supplies_header = tk.Label(
+    supplies_scrollable_frame,
+    text="SUPPLIES + CLASS READINESS",
+    font=("Arial", 20, "bold"),
+    bg=lux_pink,
+    fg=dark_text
+)
+
+
+supplies_header.pack(
+    fill="x"
+)
+
+
+tk.Label(
+    supplies_scrollable_frame,
+    text=(
+        "Track inventory, define what each class uses, "
+        "and compare real enrollment against stock on hand."
+    ),
+    font=("Arial", 10),
+    bg=soft_pink,
+    fg=dark_text
+).pack(
+    pady=(8, 4)
+)
+
+
+supplies_count_label = tk.Label(
+    supplies_scrollable_frame,
+    text="0 inventory items",
+    font=("Arial", 10, "italic"),
+    bg=soft_pink,
+    fg=gold
+)
+
+
+supplies_count_label.pack(
+    pady=(0, 8)
+)
+
+
+# =====================================================
+# INVENTORY SECTION
+# =====================================================
+
+inventory_section = tk.LabelFrame(
+    supplies_scrollable_frame,
+    text="INVENTORY",
+    font=("Arial", 12, "bold"),
+    bg=soft_pink,
+    fg=dark_text,
+    padx=10,
+    pady=8
+)
+
+
+inventory_section.pack(
+    fill="x",
+    padx=12,
+    pady=(0, 12)
+)
+
+
+inventory_edit_status_label = tk.Label(
+    inventory_section,
+    text="Adding a new inventory item",
+    font=("Arial", 10, "italic"),
+    bg=soft_pink,
+    fg=gold
+)
+
+
+inventory_edit_status_label.grid(
+    row=0,
+    column=0,
+    columnspan=6,
+    pady=(0, 6)
+)
+
+
+# ITEM NAME
+
+tk.Label(
+    inventory_section,
+    text="Item Name",
+    font=("Arial", 10, "bold"),
+    bg=soft_pink
+).grid(
+    row=1,
+    column=0,
+    sticky="w",
+    padx=4,
+    pady=4
+)
+
+
+inventory_item_entry = tk.Entry(
+    inventory_section,
+    width=24
+)
+
+
+inventory_item_entry.grid(
+    row=1,
+    column=1,
+    sticky="ew",
+    padx=4,
+    pady=4
+)
+
+
+# CATEGORY
+
+tk.Label(
+    inventory_section,
+    text="Category",
+    font=("Arial", 10, "bold"),
+    bg=soft_pink
+).grid(
+    row=1,
+    column=2,
+    sticky="w",
+    padx=4,
+    pady=4
+)
+
+
+inventory_category_combo = ttk.Combobox(
+    inventory_section,
+    values=(
+        "Disposables",
+        "Student Kits",
+        "Lash Products",
+        "Adhesives",
+        "Tools",
+        "Sanitation",
+        "Equipment",
+        "Other"
+    ),
+    state="readonly",
+    width=18
+)
+
+
+inventory_category_combo.set(
+    "Disposables"
+)
+
+
+inventory_category_combo.grid(
+    row=1,
+    column=3,
+    sticky="ew",
+    padx=4,
+    pady=4
+)
+
+
+# QUANTITY ON HAND
+
+tk.Label(
+    inventory_section,
+    text="On Hand",
+    font=("Arial", 10, "bold"),
+    bg=soft_pink
+).grid(
+    row=1,
+    column=4,
+    sticky="w",
+    padx=4,
+    pady=4
+)
+
+
+inventory_quantity_entry = tk.Entry(
+    inventory_section,
+    width=10
+)
+
+
+inventory_quantity_entry.insert(
+    0,
+    "0"
+)
+
+
+inventory_quantity_entry.grid(
+    row=1,
+    column=5,
+    sticky="ew",
+    padx=4,
+    pady=4
+)
+
+
+# MINIMUM STOCK
+
+tk.Label(
+    inventory_section,
+    text="Minimum Stock",
+    font=("Arial", 10, "bold"),
+    bg=soft_pink
+).grid(
+    row=2,
+    column=0,
+    sticky="w",
+    padx=4,
+    pady=4
+)
+
+
+inventory_minimum_entry = tk.Entry(
+    inventory_section,
+    width=12
+)
+
+
+inventory_minimum_entry.insert(
+    0,
+    "0"
+)
+
+
+inventory_minimum_entry.grid(
+    row=2,
+    column=1,
+    sticky="ew",
+    padx=4,
+    pady=4
+)
+
+
+# COST PER UNIT
+
+tk.Label(
+    inventory_section,
+    text="Cost / Unit",
+    font=("Arial", 10, "bold"),
+    bg=soft_pink
+).grid(
+    row=2,
+    column=2,
+    sticky="w",
+    padx=4,
+    pady=4
+)
+
+
+inventory_cost_entry = tk.Entry(
+    inventory_section,
+    width=12
+)
+
+
+inventory_cost_entry.insert(    0,
+    "0"
+)
+
+
+inventory_cost_entry.grid(
+    row=2,
+    column=3,
+    sticky="ew",
+    padx=4,
+    pady=4
+)
+
+
+# SUPPLIER
+
+tk.Label(
+    inventory_section,
+    text="Supplier",
+    font=("Arial", 10, "bold"),
+    bg=soft_pink
+).grid(
+    row=2,
+    column=4,
+    sticky="w",
+    padx=4,
+    pady=4
+)
+
+
+inventory_supplier_entry = tk.Entry(
+    inventory_section,
+    width=18
+)
+
+
+inventory_supplier_entry.grid(
+    row=2,
+    column=5,
+    sticky="ew",
+    padx=4,
+    pady=4
+)
+
+
+# NOTES
+
+tk.Label(
+    inventory_section,
+    text="Notes",
+    font=("Arial", 10, "bold"),
+    bg=soft_pink
+).grid(
+    row=3,
+    column=0,
+    sticky="w",
+    padx=4,
+    pady=4
+)
+
+
+inventory_notes_entry = tk.Entry(
+    inventory_section
+)
+
+
+inventory_notes_entry.grid(
+    row=3,
+    column=1,
+    columnspan=5,
+    sticky="ew",
+    padx=4,
+    pady=4
+)
+
+
+for column_index in range(6):
+
+    inventory_section.columnconfigure(
+        column_index,
+        weight=1
+    )
+
+
+inventory_button_frame = tk.Frame(
+    inventory_section,
+    bg=soft_pink
+)
+
+
+inventory_button_frame.grid(
+    row=4,
+    column=0,
+    columnspan=6,
+    pady=(6, 8)
+)
+
+
+tk.Button(
+    inventory_button_frame,
+    text="ADD SUPPLY",
+    font=("Arial", 10, "bold"),
+    bg=gold,
+    fg="white",
+    padx=12,
+    pady=6,
+    command=add_supply
+).grid(
+    row=0,
+    column=0,
+    padx=4
+)
+
+
+tk.Button(
+    inventory_button_frame,
+    text="LOAD SELECTED",
+    font=("Arial", 10, "bold"),
+    bg=lux_pink,
+    fg=dark_text,
+    padx=12,
+    pady=6,
+    command=load_selected_supply
+).grid(
+    row=0,
+    column=1,
+    padx=4
+)
+
+
+tk.Button(
+    inventory_button_frame,
+    text="UPDATE LOADED",
+    font=("Arial", 10, "bold"),
+    padx=12,
+    pady=6,
+    command=update_loaded_supply
+).grid(
+    row=0,
+    column=2,
+    padx=4
+)
+
+
+tk.Button(
+    inventory_button_frame,
+    text="CLEAR FORM",
+    font=("Arial", 10, "bold"),
+    padx=12,
+    pady=6,
+    command=clear_supply_form
+).grid(
+    row=0,
+    column=3,
+    padx=4
+)
+
+
+tk.Button(
+    inventory_button_frame,
+    text="DELETE SELECTED",
+    font=("Arial", 10, "bold"),
+    padx=12,
+    pady=6,
+    command=delete_selected_supply
+).grid(
+    row=0,
+    column=4,
+    padx=4
+)
+
+
+inventory_table_frame = tk.Frame(
+    inventory_section,
+    bg=soft_pink
+)
+
+
+inventory_table_frame.grid(
+    row=5,
+    column=0,
+    columnspan=6,
+    sticky="nsew"
+)
+
+
+supplies_columns = (
+    "id",
+    "item",
+    "category",
+    "on_hand",
+    "minimum",
+    "status",
+    "cost",
+    "supplier"
+)
+
+
+supplies_table = ttk.Treeview(
+    inventory_table_frame,
+    columns=supplies_columns,
+    show="headings",
+    height=7
+)
+
+
+inventory_headings = {
+    "id": "ID",
+    "item": "Item",
+    "category": "Category",
+    "on_hand": "On Hand",
+    "minimum": "Minimum",
+    "status": "Stock Status",
+    "cost": "Cost / Unit",
+    "supplier": "Supplier"
+}
+
+
+for column_name, heading_text in (
+    inventory_headings.items()
+):
+
+    supplies_table.heading(
+        column_name,
+        text=heading_text
+    )
+
+
+supplies_table.column(
+    "id",
+    width=45,
+    anchor="center"
+)
+
+
+supplies_table.column(
+    "item",
+    width=180
+)
+
+
+supplies_table.column(
+    "category",
+    width=110
+)
+
+
+supplies_table.column(
+    "on_hand",
+    width=80,
+    anchor="center"
+)
+
+
+supplies_table.column(
+    "minimum",
+    width=80,
+    anchor="center"
+)
+
+
+supplies_table.column(
+    "status",
+    width=110,
+    anchor="center"
+)
+
+
+supplies_table.column(
+    "cost",
+    width=90,
+    anchor="e"
+)
+
+
+supplies_table.column(
+    "supplier",
+    width=140
+)
+
+
+inventory_vertical_scrollbar = ttk.Scrollbar(
+    inventory_table_frame,
+    orient="vertical",
+    command=supplies_table.yview
+)
+
+
+inventory_horizontal_scrollbar = ttk.Scrollbar(
+    inventory_table_frame,
+    orient="horizontal",
+    command=supplies_table.xview
+)
+
+
+supplies_table.configure(
+    yscrollcommand=inventory_vertical_scrollbar.set,
+    xscrollcommand=inventory_horizontal_scrollbar.set
+)
+
+
+supplies_table.grid(
+    row=0,
+    column=0,
+    sticky="nsew"
+)
+
+
+inventory_vertical_scrollbar.grid(
+    row=0,
+    column=1,
+    sticky="ns"
+)
+
+
+inventory_horizontal_scrollbar.grid(
+    row=1,
+    column=0,
+    sticky="ew"
+)
+
+
+inventory_table_frame.columnconfigure(
+    0,
+    weight=1
+)
+
+
+inventory_table_frame.rowconfigure(
+    0,
+    weight=1
+)
+
+
+# =====================================================
+# CLASS SUPPLY REQUIREMENTS SECTION
+# =====================================================
+
+requirements_section = tk.LabelFrame(
+    supplies_scrollable_frame,
+    text="CLASS SUPPLY REQUIREMENTS",
+    font=("Arial", 12, "bold"),
+    bg=soft_pink,
+    fg=dark_text,
+    padx=10,
+    pady=8
+)
+
+
+requirements_section.pack(
+    fill="x",
+    padx=12,
+    pady=(0, 12)
+)
+
+
+tk.Label(
+    requirements_section,
+    text=(
+        "Define how much of an inventory item a class uses. "
+        "Per Student grows with enrollment; Fixed is needed once per class."
+    ),
+    font=("Arial", 9),
+    bg=soft_pink,
+    fg=dark_text
+).grid(
+    row=0,
+    column=0,
+    columnspan=6,
+    pady=(0, 4)
+)
+
+
+requirement_count_label = tk.Label(
+    requirements_section,
+    text="0 class supply rules",
+    font=("Arial", 9, "italic"),
+    bg=soft_pink,
+    fg=gold
+)
+
+
+requirement_count_label.grid(
+    row=1,
+    column=0,
+    columnspan=6,
+    pady=(0, 4)
+)
+
+
+requirement_edit_status_label = tk.Label(
+    requirements_section,
+    text="Adding a class supply requirement",
+    font=("Arial", 10, "italic"),
+    bg=soft_pink,
+    fg=gold
+)
+
+
+requirement_edit_status_label.grid(
+    row=2,
+    column=0,
+    columnspan=6,
+    pady=(0, 6)
+)
+
+
+# CLASS TYPE
+
+tk.Label(
+    requirements_section,
+    text="Class Type",
+    font=("Arial", 10, "bold"),
+    bg=soft_pink
+).grid(
+    row=3,
+    column=0,
+    sticky="w",
+    padx=4,
+    pady=4
+)
+
+
+requirement_class_combo = ttk.Combobox(
+    requirements_section,
+    values=list(
+        class_prices.keys()
+    ),
+    state="readonly",
+    width=18
+)
+
+
+requirement_class_combo.set(
+    "Intro Class"
+)
+
+
+requirement_class_combo.grid(
+    row=3,
+    column=1,
+    sticky="ew",
+    padx=4,
+    pady=4
+)
+
+
+# SUPPLY ITEM
+
+tk.Label(
+    requirements_section,
+    text="Supply Item",
+    font=("Arial", 10, "bold"),
+    bg=soft_pink
+).grid(
+    row=3,
+    column=2,
+    sticky="w",
+    padx=4,
+    pady=4
+)
+
+
+requirement_supply_combo = ttk.Combobox(
+    requirements_section,
+    state="readonly",
+    width=28
+)
+
+
+requirement_supply_combo.grid(
+    row=3,
+    column=3,
+    columnspan=3,
+    sticky="ew",
+    padx=4,
+    pady=4
+)
+
+
+# PER STUDENT
+
+tk.Label(
+    requirements_section,
+    text="Per Student",
+    font=("Arial", 10, "bold"),
+    bg=soft_pink
+).grid(
+    row=4,
+    column=0,
+    sticky="w",
+    padx=4,
+    pady=4
+)
+
+
+requirement_per_student_entry = tk.Entry(
+    requirements_section,
+    width=10
+)
+
+
+requirement_per_student_entry.insert(
+    0,
+    "0"
+)
+
+
+requirement_per_student_entry.grid(
+    row=4,
+    column=1,
+    sticky="ew",
+    padx=4,
+    pady=4
+)
+
+
+# FIXED PER CLASS
+
+tk.Label(
+    requirements_section,
+    text="Fixed / Class (once per class)",
+    font=("Arial", 10, "bold"),
+    bg=soft_pink
+).grid(
+    row=4,
+    column=2,
+    sticky="w",
+    padx=4,
+    pady=4
+)
+
+
+requirement_fixed_entry = tk.Entry(
+    requirements_section,
+    width=10
+)
+
+
+requirement_fixed_entry.insert(
+    0,
+    "0"
+)
+
+
+requirement_fixed_entry.grid(
+    row=4,
+    column=3,
+    sticky="ew",
+    padx=4,
+    pady=4
+)
+
+
+# NOTES
+
+tk.Label(
+    requirements_section,
+    text="Notes",
+    font=("Arial", 10, "bold"),
+    bg=soft_pink
+).grid(
+    row=4,
+    column=4,
+    sticky="w",
+    padx=4,
+    pady=4
+)
+
+
+requirement_notes_entry = tk.Entry(
+    requirements_section,
+    width=20
+)
+
+
+requirement_notes_entry.grid(
+    row=4,
+    column=5,
+    sticky="ew",
+    padx=4,
+    pady=4
+)
+
+
+for column_index in range(6):
+
+    requirements_section.columnconfigure(
+        column_index,
+        weight=1
+    )
+
+
+requirement_buttons = tk.Frame(
+    requirements_section,
+    bg=soft_pink
+)
+
+
+requirement_buttons.grid(
+    row=5,
+    column=0,
+    columnspan=6,
+    pady=(6, 8)
+)
+
+
+tk.Button(
+    requirement_buttons,
+    text="ADD REQUIREMENT",
+    font=("Arial", 10, "bold"),
+    bg=gold,
+    fg="white",
+    padx=10,
+    pady=6,
+    command=add_supply_requirement
+).grid(
+    row=0,
+    column=0,
+    padx=4
+)
+
+
+tk.Button(
+    requirement_buttons,
+    text="LOAD SELECTED",
+    font=("Arial", 10, "bold"),
+    bg=lux_pink,
+    fg=dark_text,
+    padx=10,
+    pady=6,
+    command=load_selected_requirement
+).grid(
+    row=0,
+    column=1,
+    padx=4
+)
+
+
+tk.Button(
+    requirement_buttons,
+    text="UPDATE LOADED",
+    font=("Arial", 10, "bold"),
+    padx=10,
+    pady=6,
+    command=update_loaded_requirement
+).grid(
+    row=0,
+    column=2,
+    padx=4
+)
+
+
+tk.Button(
+    requirement_buttons,
+    text="CLEAR FORM",
+    font=("Arial", 10, "bold"),
+    padx=10,
+    pady=6,
+    command=clear_requirement_form
+).grid(
+    row=0,
+    column=3,
+    padx=4
+)
+
+
+tk.Button(
+    requirement_buttons,
+    text="DELETE SELECTED",
+    font=("Arial", 10, "bold"),
+    padx=10,
+    pady=6,
+    command=delete_selected_requirement
+).grid(
+    row=0,
+    column=4,
+    padx=4
+)
+
+
+requirements_table_frame = tk.Frame(
+    requirements_section,
+    bg=soft_pink
+)
+
+
+requirements_table_frame.grid(
+    row=6,
+    column=0,
+    columnspan=6,
+    sticky="nsew"
+)
+
+
+requirements_columns = (
+    "id",
+    "class_type",
+    "supply",
+    "per_student",
+    "fixed",
+    "notes"
+)
+
+
+requirements_table = ttk.Treeview(
+    requirements_table_frame,
+    columns=requirements_columns,
+    show="headings",
+    height=7
+)
+
+
+requirement_headings = {
+    "id": "ID",
+    "class_type": "Class Type",
+    "supply": "Supply",
+    "per_student": "Per Student",
+    "fixed": "Fixed / Class",
+    "notes": "Notes"
+}
+
+
+for column_name, heading_text in (
+    requirement_headings.items()
+):
+
+    requirements_table.heading(
+        column_name,
+        text=heading_text
+    )
+
+
+requirements_table.column(
+    "id",
+    width=45,
+    anchor="center"
+)
+
+
+requirements_table.column(
+    "class_type",
+    width=120
+)
+
+
+requirements_table.column(
+    "supply",
+    width=180
+)
+
+
+requirements_table.column(
+    "per_student",
+    width=90,
+    anchor="center"
+)
+
+
+requirements_table.column(
+    "fixed",
+    width=90,
+    anchor="center"
+)
+
+
+requirements_table.column(
+    "notes",
+    width=260
+)
+
+
+requirements_vertical_scrollbar = ttk.Scrollbar(
+    requirements_table_frame,
+    orient="vertical",
+    command=requirements_table.yview
+)
+
+
+requirements_horizontal_scrollbar = ttk.Scrollbar(
+    requirements_table_frame,
+    orient="horizontal",
+    command=requirements_table.xview
+)
+
+
+requirements_table.configure(
+    yscrollcommand=requirements_vertical_scrollbar.set,
+    xscrollcommand=requirements_horizontal_scrollbar.set
+)
+
+
+requirements_table.grid(
+    row=0,
+    column=0,
+    sticky="nsew"
+)
+
+
+requirements_vertical_scrollbar.grid(
+    row=0,
+    column=1,
+    sticky="ns"
+)
+
+
+requirements_horizontal_scrollbar.grid(
+    row=1,
+    column=0,
+    sticky="ew"
+)
+
+
+requirements_table_frame.columnconfigure(
+    0,
+    weight=1
+)
+
+
+requirements_table_frame.rowconfigure(
+    0,
+    weight=1
+)
+
+
+# =====================================================
+# CLASS READINESS SECTION
+# =====================================================
+
+readiness_section = tk.LabelFrame(
+    supplies_scrollable_frame,
+    text="SCHEDULED CLASS SUPPLY READINESS",
+    font=("Arial", 12, "bold"),
+    bg=soft_pink,
+    fg=dark_text,
+    padx=10,
+    pady=8
+)
+
+
+readiness_section.pack(
+    fill="x",
+    padx=12,
+    pady=(0, 18)
+)
+
+
+tk.Label(
+    readiness_section,
+    text="Scheduled Class",
+    font=("Arial", 10, "bold"),
+    bg=soft_pink
+).pack(
+    pady=(0, 4)
+)
+
+
+readiness_session_combo = ttk.Combobox(
+    readiness_section,
+    state="readonly",
+    width=85
+)
+
+
+readiness_session_combo.pack(
+    padx=8,
+    fill="x"
+)
+
+
+readiness_session_combo.bind(
+    "<<ComboboxSelected>>",
+    refresh_supply_readiness
+)
+
+
+tk.Button(
+    readiness_section,
+    text="REFRESH READINESS",
+    font=("Arial", 10, "bold"),
+    bg=gold,
+    fg="white",
+    padx=12,
+    pady=6,
+    command=refresh_supply_readiness
+).pack(
+    pady=6
+)
+
+
+readiness_session_summary_label = tk.Label(
+    readiness_section,
+    text="",
+    font=("Arial", 10, "bold"),
+    bg=soft_pink,
+    fg=dark_text
+)
+
+
+readiness_session_summary_label.pack(
+    pady=(2, 3)
+)
+
+
+readiness_overall_status_label = tk.Label(
+    readiness_section,
+    text="",
+    font=("Arial", 11, "bold"),
+    bg=soft_pink,
+    fg=gold
+)
+
+
+readiness_overall_status_label.pack(
+    pady=(0, 6)
+)
+
+
+readiness_table_frame = tk.Frame(
+    readiness_section,
+    bg=soft_pink
+)
+
+
+readiness_table_frame.pack(
+    fill="x"
+)
+
+
+readiness_columns = (
+    "supply",
+    "category",
+    "per_student",
+    "fixed",
+    "enrolled",
+    "required",
+    "on_hand",
+    "shortage",
+    "status"
+)
+
+
+readiness_table = ttk.Treeview(
+    readiness_table_frame,
+    columns=readiness_columns,
+    show="headings",
+    height=9
+)
+
+
+readiness_headings = {
+    "supply": "Supply",
+    "category": "Category",
+    "per_student": "Per Student",
+    "fixed": "Fixed",
+    "enrolled": "Enrolled",
+    "required": "Need",
+    "on_hand": "Have",
+    "shortage": "Short",
+    "status": "Status"
+}
+
+
+for column_name, heading_text in (
+    readiness_headings.items()
+):
+
+    readiness_table.heading(
+        column_name,
+        text=heading_text
+    )
+
+
+readiness_table.column(
+    "supply",
+    width=170
+)
+
+
+readiness_table.column(
+    "category",
+    width=100
+)
+
+
+readiness_table.column(
+    "per_student",
+    width=80,
+    anchor="center"
+)
+
+
+readiness_table.column(
+    "fixed",
+    width=70,
+    anchor="center"
+)
+
+
+readiness_table.column(    "enrolled",
+    width=70,
+    anchor="center"
+)
+
+
+readiness_table.column(
+    "required",
+    width=70,
+    anchor="center"
+)
+
+
+readiness_table.column(
+    "on_hand",
+    width=70,
+    anchor="center"
+)
+
+
+readiness_table.column(
+    "shortage",
+    width=70,
+    anchor="center"
+)
+
+
+readiness_table.column(
+    "status",
+    width=150,
+    anchor="center"
+)
+
+
+readiness_vertical_scrollbar = ttk.Scrollbar(
+    readiness_table_frame,
+    orient="vertical",
+    command=readiness_table.yview
+)
+
+
+readiness_horizontal_scrollbar = ttk.Scrollbar(
+    readiness_table_frame,
+    orient="horizontal",
+    command=readiness_table.xview
+)
+
+
+readiness_table.configure(
+    yscrollcommand=readiness_vertical_scrollbar.set,
+    xscrollcommand=readiness_horizontal_scrollbar.set
+)
+
+
+readiness_table.grid(
+    row=0,
+    column=0,
+    sticky="nsew"
+)
+
+
+readiness_vertical_scrollbar.grid(
+    row=0,
+    column=1,
+    sticky="ns"
+)
+
+
+readiness_horizontal_scrollbar.grid(
+    row=1,
+    column=0,
+    sticky="ew"
+)
+
+
+readiness_table_frame.columnconfigure(
+    0,
+    weight=1
+)
+
+
+readiness_table_frame.rowconfigure(
+    0,
+    weight=1
+)
+
+
+
+# =====================================================
+# HELP TAB — BECCA'S QUICK GUIDE
+# =====================================================
+
+# This page is intentionally written in plain English.
+# It is a built-in mini manual so normal daily use does not
+# require remembering our development conversations.
+
+help_main_container = tk.Frame(
+    help_tab,
+    bg=soft_pink
+)
+
+
+help_main_container.pack(
+    fill="both",
+    expand=True
+)
+
+
+help_canvas = tk.Canvas(
+    help_main_container,
+    bg=soft_pink,
+    highlightthickness=0
+)
+
+
+help_scrollbar = ttk.Scrollbar(
+    help_main_container,
+    orient="vertical",
+    command=help_canvas.yview
+)
+
+
+help_scrollable_frame = tk.Frame(
+    help_canvas,
+    bg=soft_pink
+)
+
+
+help_scrollable_frame.bind(
+    "<Configure>",
+    lambda event: help_canvas.configure(
+        scrollregion=help_canvas.bbox("all")
+    )
+)
+
+
+help_canvas_window = help_canvas.create_window(
+    (0, 0),
+    window=help_scrollable_frame,
+    anchor="nw"
+)
+
+
+def resize_help_scrollable_frame(
+    event
+):
+
+    help_canvas.itemconfigure(
+        help_canvas_window,
+        width=event.width
+    )
+
+
+help_canvas.bind(
+    "<Configure>",
+    resize_help_scrollable_frame
+)
+
+
+help_canvas.configure(
+    yscrollcommand=help_scrollbar.set
+)
+
+
+help_canvas.pack(
+    side="left",
+    fill="both",
+    expand=True
+)
+
+
+help_scrollbar.pack(
+    side="right",
+    fill="y"
+)
+
+
+def help_mousewheel_scroll(
+    event
+):
+
+    if notebook.select() == str(
+        help_tab
+    ):
+
+        help_canvas.yview_scroll(
+            int(
+                -1 * (event.delta / 120)
+            ),
+            "units"
+        )
+
+
+window.bind_all(
+    "<MouseWheel>",
+    help_mousewheel_scroll,
+    add="+"
+)
+
+
+help_header = tk.Frame(
+    help_scrollable_frame,
+    bg=lux_pink
+)
+
+
+help_header.pack(
+    fill="x"
+)
+
+
+tk.Label(
+    help_header,
+    text="BECCA'S QUICK GUIDE",
+    font=("Arial", 20, "bold"),
+    bg=lux_pink,
+    fg=dark_text
+).pack(
+    pady=(12, 2)
+)
+
+
+tk.Label(
+    help_header,
+    text="Plain-English directions for the jobs you will do most often.",
+    font=("Arial", 10),
+    bg=lux_pink,
+    fg=dark_text
+).pack(
+    pady=(0, 12)
+)
+
+
+# -----------------------------------------------------
+# QUICK ACTIONS
+# -----------------------------------------------------
+
+help_quick_frame = tk.LabelFrame(
+    help_scrollable_frame,
+    text="QUICK ACTIONS",
+    font=("Arial", 11, "bold"),
+    bg=soft_pink,
+    fg=dark_text,
+    padx=12,
+    pady=12
+)
+
+
+help_quick_frame.pack(
+    fill="x",
+    padx=25,
+    pady=(12, 8)
+)
+
+
+quick_help_buttons = (
+    (
+        "DASHBOARD",
+        dashboard_tab
+    ),
+    (
+        "STUDENTS",
+        students_tab
+    ),
+    (
+        "SCHEDULE CLASS",
+        calculator_tab
+    ),
+    (
+        "ENROLL / PAYMENT",
+        enrollments_tab
+    ),
+    (
+        "READINESS",
+        class_readiness_tab
+    ),
+    (
+        "BACKUP",
+        backup_tab
+    )
+)
+
+
+for button_number, (
+    button_text,
+    target_tab
+) in enumerate(
+    quick_help_buttons
+):
+
+    tk.Button(
+        help_quick_frame,
+        text=button_text,
+        font=("Arial", 9, "bold"),
+        bg=(
+            gold
+            if button_number in (0, 3)
+            else lux_pink
+        ),
+        fg=(
+            "white"
+            if button_number in (0, 3)
+            else dark_text
+        ),
+        padx=10,
+        pady=7,
+        command=lambda tab=target_tab: notebook.select(
+            tab
+        )
+    ).grid(
+        row=button_number // 3,
+        column=button_number % 3,
+        padx=5,
+        pady=5,
+        sticky="ew"
+    )
+
+
+for column_number in range(
+    3
+):
+
+    help_quick_frame.columnconfigure(
+        column_number,
+        weight=1
+    )
+
+
+# -----------------------------------------------------
+# DAILY WORKFLOW
+# -----------------------------------------------------
+
+workflow_frame = tk.LabelFrame(
+    help_scrollable_frame,
+    text="A SIMPLE DAILY WORKFLOW",
+    font=("Arial", 11, "bold"),
+    bg="white",
+    fg=dark_text,
+    padx=15,
+    pady=12
+)
+
+
+workflow_frame.pack(
+    fill="x",
+    padx=25,
+    pady=8
+)
+
+
+tk.Label(
+    workflow_frame,
+    text=(
+        "1. DASHBOARD — Start here. See upcoming classes, money collected, balances, and what needs attention.\n\n"
+        "2. STUDENTS — Add a new student or search for an existing one.\n\n"
+        "3. CALCULATOR — Plan pricing or schedule a real class session.\n\n"
+        "4. ENROLLMENTS — Put a student into a scheduled class. Load the enrollment to record payments.\n\n"
+        "5. READINESS — Before class day, check enrollment, balances, certification tracking, and supplies in one place.\n\n"
+        "6. REPORTS — Preview or export rosters, balance reports, student lists, or readiness reports.\n\n"
+        "7. BACKUP — Make a Quick Backup regularly and occasionally save a copy somewhere outside this computer."
+    ),
+    font=("Arial", 10),
+    bg="white",
+    fg=dark_text,
+    justify="left",
+    anchor="w",
+    wraplength=840
+).pack(
+    fill="x"
+)
+
+
+# -----------------------------------------------------
+# WHAT EACH TAB DOES
+# -----------------------------------------------------
+
+tabs_guide_frame = tk.LabelFrame(
+    help_scrollable_frame,
+    text="WHAT EACH TAB DOES",
+    font=("Arial", 11, "bold"),
+    bg=soft_pink,
+    fg=dark_text,
+    padx=15,
+    pady=12
+)
+
+
+tabs_guide_frame.pack(
+    fill="x",
+    padx=25,
+    pady=8
+)
+
+
+tab_help_text = (
+    ("Dashboard", "Today's business picture and quick navigation."),
+    ("Calculator", "What-if planning plus scheduling new class sessions."),
+    ("Classes", "Scheduled classes and their live student rosters."),
+    ("Readiness", "One screen that answers: Is this class ready to run?"),
+    ("Students", "Permanent student contact records plus search and filters."),
+    ("Enrollments", "Connect students to classes, track certification, and record payments."),
+    ("Reports", "Preview and export business information as CSV files."),
+    ("Backup", "Create safe snapshots and restore earlier data if needed."),
+    ("History", "Older calculator scenarios saved to CSV."),
+    ("Supplies", "Inventory, class supply rules, and shortage calculations.")
+)
+
+
+for row_number, (
+    tab_name,
+    explanation
+) in enumerate(
+    tab_help_text
+):
+
+    tk.Label(
+        tabs_guide_frame,
+        text=tab_name,
+        font=("Arial", 10, "bold"),
+        bg=soft_pink,
+        fg=gold,
+        anchor="w",
+        width=14
+    ).grid(
+        row=row_number,
+        column=0,
+        sticky="nw",
+        padx=(0, 10),
+        pady=3
+    )
+
+
+    tk.Label(
+        tabs_guide_frame,
+        text=explanation,
+        font=("Arial", 10),
+        bg=soft_pink,
+        fg=dark_text,
+        anchor="w",
+        justify="left",
+        wraplength=700
+    ).grid(
+        row=row_number,
+        column=1,
+        sticky="w",
+        pady=3
+    )
+
+
+tabs_guide_frame.columnconfigure(
+    1,
+    weight=1
+)
+
+
+# -----------------------------------------------------
+# KEYBOARD SHORTCUTS
+# -----------------------------------------------------
+
+shortcut_frame = tk.LabelFrame(
+    help_scrollable_frame,
+    text="KEYBOARD SHORTCUTS",
+    font=("Arial", 11, "bold"),
+    bg="white",
+    fg=dark_text,
+    padx=15,
+    pady=12
+)
+
+
+shortcut_frame.pack(
+    fill="x",
+    padx=25,
+    pady=8
+)
+
+
+tk.Label(
+    shortcut_frame,
+    text=(
+        "F5 = Refresh the page you are viewing\n"
+        "Ctrl + F = Jump to Search\n"
+        "Ctrl + D = Dashboard\n"
+        "Ctrl + S = Students\n"
+        "Ctrl + E = Enrollments / Payments\n"
+        "Ctrl + R = Readiness\n"
+        "Ctrl + B = Backup\n"
+        "Ctrl + H = Help"
+    ),
+    font=("Arial", 10),
+    bg="white",
+    fg=dark_text,
+    justify="left",
+    anchor="w"
+).pack(
+    fill="x"
+)
+
+
+# -----------------------------------------------------
+# DATA SAFETY
+# -----------------------------------------------------
+
+data_safety_frame = tk.LabelFrame(
+    help_scrollable_frame,
+    text="GOOD TO KNOW",
+    font=("Arial", 11, "bold"),
+    bg=soft_pink,
+    fg=dark_text,
+    padx=15,
+    pady=12
+)
+
+
+data_safety_frame.pack(
+    fill="x",
+    padx=25,
+    pady=(8, 20)
+)
+
+
+tk.Label(
+    data_safety_frame,
+    text=(
+        "• Add / Update / Payment buttons save directly to the SQLite database.\n"
+        "• Reports do not change your data. They only read it.\n"
+        "• Filters do not delete anything. CLEAR FILTERS shows everything again.\n"
+        "• Payment Status is calculated from recorded payments, so the ledger is the source of truth.\n"
+        "• Before a risky change or restore, make a backup. Lux also creates a safety backup before restoring."
+    ),
+    font=("Arial", 10),
+    bg=soft_pink,
+    fg=dark_text,
+    justify="left",
+    anchor="w",
+    wraplength=840
+).pack(
+    fill="x"
+)
+
+
+
+# =====================================================
+# STARTUP
+# =====================================================
+
+# First create/check all SQLite tables.
+
+initialize_database()
+
+
+# Populate all persistent-data tables.
+
+refresh_class_sessions_table()
+
+refresh_history_table()
+
+refresh_students_table()
+
+refresh_enrollment_choices()
+
+refresh_enrollments_table()
+
+refresh_payment_section()
+
+refresh_supplies_all()
+
+refresh_dashboard()
+
+refresh_class_readiness_all()
+
+refresh_reports_all()
+
+refresh_backup_file_status()
+
+refresh_app_status()
+
+install_becca_tooltips()
+
+
+# Start Becca on the Dashboard every time Lux opens.
+
+notebook.select(
+    dashboard_tab
+)
+
+
+# =====================================================
+# START PROGRAM
+# =====================================================
+
+window.mainloop()
